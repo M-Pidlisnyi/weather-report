@@ -6,13 +6,28 @@
 </head>
 <body>
     <div>
-        <p>
-            <span>{{ city }}</span>
-        </p>
-        <p>
-            <span>{{ weather.main.temp }} K</span>
-            {{ weather.weather.0.description }}
-        </p>
+        <form action="/" method="post">
+            {% csrf_token %}
+            <div>
+                <label>
+                    <input type="text" name="city" placeholder="City Name">
+                </label>
+                <button type="submit">View City</button>
+            </div>
+        </form>
+    </div>
+    <div>
+        {% for city, weather in zipper %}
+        <div>
+            <p>
+                <span>{{ city.name }}</span>
+            </p>
+            <p>
+                <span>{{ weather.main.temp }} K</span>
+                {{ weather.weather.0.description }}
+            </p>
+        </div>
+        {% endfor %}
     </div>
 </body>
 </html>
