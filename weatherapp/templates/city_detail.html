@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    {{ city.name }}
+    <br>
+    <div>
+        {% for stamp in weather.list %}
+            <div>
+                <p>
+                    {{ stamp.main.temp }} K
+                </p>
+                <p>
+                    {{ stamp.weathe.0.description }}
+                </p>
+                    -{{ stamp.dt_txt }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
