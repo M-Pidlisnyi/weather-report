@@ -5,6 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-    Hello world
+    <div>
+        <p>
+            <span>{{ city }}</span>
+        </p>
+        <p>
+            <span>{{ weather.main.temp }} K</span>
+            {{ weather.weather.0.description }}
+        </p>
+    </div>
 </body>
 </html>
