@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>What's the weather like?</title>
+</head>
+<body>
+    <section>
+        <div>
+            <nav>
+                <div>
+                    <a href="/admin">Admin page</a>
+                </div>
+                <div>
+                    <a href="/">Log in</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <div>Hello {{ user.get_username }}</div>
+                {% else %}
+                    hello too
+                {% endif %}
+            </nav>
+        </div>
+    </section>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
