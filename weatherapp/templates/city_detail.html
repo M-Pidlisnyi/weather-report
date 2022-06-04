@@ -1,7 +1,12 @@
 {% extends 'layout.html' %}
 {% block content %}
 <div>
-    {{ city.name }}
+    <p>
+        {{ city.name }}
+        {% if coords %}
+        {{ coords  }}
+        {% endif %}
+    </p>
     <br>
     <div>
         {% for stamp in weather.list %}
