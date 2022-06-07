@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<div>
+    <p>
+        you are in your profile
+        this is your info:
+        {{ user.get_username }}
+        {{ user.appuser.units }}
+        {{ user.appuser.cities }}
+    </p>
+</div>
+
+{% endblock %}

@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -5,6 +7,8 @@ import requests as pyreq
 from django.views.generic import DetailView
 from decouple import config
 from .models import City
+
+
 # Create your views here.
 
 
@@ -22,7 +26,7 @@ def index(request):
 			new_city = City.objects.create(name=new_city_name, latitude=new_city_coords[0], longitude=new_city_coords[1])
 		except IntegrityError:
 			"""integrity error may happen if city with such a name already is in db """
-			new_city = City.objects.get(name = new_city_name)
+			new_city = City.objects.get(name=new_city_name)
 		return HttpResponseRedirect(new_city.get_absolute_url())
 
 	api_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
@@ -36,6 +40,11 @@ def index(request):
 	return render(request, 'index.html', context=context)
 
 
+def user_profile(request, username):
+
+	return render(request, 'user_profile.html')
+
+
 class CityDetailView(DetailView):
 	template_name = 'city_detail.html'
 	model = City
@@ -46,6 +55,7 @@ class CityDetailView(DetailView):
 		context['weather'] = pyreq.get(api_url.format(context['city'].name, config('forecast_API_KEY'))).json()
 
 		# check if coords for city are available
+		# not sure if i need to check at all
 		if not (context['city'].latitude or context['city'].longitude is None):
 			context['coords'] = (context['city'].latitude, context['city'].longitude)
 		else:
@@ -55,3 +65,4 @@ class CityDetailView(DetailView):
 
 	def get_queryset(self):
 		return super(CityDetailView, self).get_queryset()
+

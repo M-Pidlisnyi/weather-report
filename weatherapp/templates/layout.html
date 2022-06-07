@@ -10,14 +10,16 @@
             <nav>
                 <div>
                     <a href="/admin">Admin page</a>
-                </div>
-                <div>
-                    <a href="/">Log in</a>
+                    <a href="/">Home page</a>
                 </div>
                 {% if user.is_authenticated %}
-                    <div>Hello {{ user.get_username }}</div>
+                    <div>
+                        Hello {{ user.get_username }}
+                        <a href="/user/{{ user.get_username }}">Your profile</a>
+                    </div>
+
                 {% else %}
-                    hello too
+                    You are not logged in
                 {% endif %}
             </nav>
         </div>
