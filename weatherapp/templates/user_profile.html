@@ -4,14 +4,41 @@
 
 <div>
     <p>
-        you are in your profile
-        this is your info:
-        {{ user.get_username }}
-        {{ user.appuser.units }}
-        {% for city in user.appuser.cities.all %}
-        {{ city.name }};
-        {% endfor %}
+        You are in your profile settings
     </p>
+    <form method="post">
+    {% csrf_token %}
+        <label>
+            Username: <input type="text" name="username" value="{{ user.get_username }}" disabled>
+        </label>
+        <br>
+        <label>
+            Email: <input type="email" name="email" value="{{ user.email }}">
+        </label>
+         <br>
+        <label>
+            First Name: <input type="text" name="firstname" value="{{ user.first_name }}">
+        </label>
+         <br>
+        <label>
+            Last Name: <input type="text" name="lastname" value="{{ user.last_name }}">
+        </label>
+         <br>
+        <label>
+            Units of Measurement <select name="units">
+                    <option value="standard" {% if units == 'standard' %}selected{% endif %}>
+                        Scientific(Kelvin)
+                    </option>
+                    <option value="metric" {% if units == 'metric' %}selected{% endif %}>
+                        Metric(Celsius degrees)
+                    </option>
+                    <option value="imperial" {% if units == 'imperial' %}selected{% endif %}>
+                        Imperial(Fahrenheit degrees)
+                    </option>
+                </select>
+        </label>
+        <button type="submit">Submit changes</button>
+    </form>
     <p>
         <a href="{% url 'logout' %} ">Log out</a>
     </p>

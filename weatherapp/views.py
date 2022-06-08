@@ -1,12 +1,14 @@
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-import requests as pyreq
 from django.views.generic import DetailView
 from decouple import config
 from .models import City, AppUser
+import requests as pyreq
 # Create your views here.
 
 
@@ -81,6 +83,34 @@ def signup(request):
 	return render(request, 'signup.html', context=context)
 
 
+class ProfileView(LoginRequiredMixin, LoginView):
+	template_name = 'user_profile.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(ProfileView, self).get_context_data(**kwargs)
+
+		current_user = self.request.user
+		context['units'] = current_user.appuser.units
+
+		return context
+
+	def get(self, request, *args, **kwargs):
+		super(ProfileView, self).get(request, *args, **kwargs)
+		return render(request, self.template_name, context=self.get_context_data())
+
+	def post(self, request, *args, **kwargs):
+		super(ProfileView, self).post(request, *args, **kwargs)
+
+		current_user = request.user
+		current_user.first_name = request.POST.get('firstname', None)
+		current_user.last_name = request.POST.get('lastname', None)
+		current_user.email = request.POST.get('email', None)
+		current_user.appuser.units = request.POST.get('units', None)
+		current_user.save()
+
+		return HttpResponseRedirect('/')
+
+
 class CityDetailView(DetailView):
 	template_name = 'city_detail.html'
 	model = City
@@ -98,7 +128,7 @@ class CityDetailView(DetailView):
 		context['weather'] = pyreq.get(api_url.format(context['city'].name,
 													units,
 													config('forecast_API_KEY'))
-									   ).json()
+									).json()
 
 		return context
 
