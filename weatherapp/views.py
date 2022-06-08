@@ -24,7 +24,10 @@ def index(request):
 		new_city_coords = (api_response[0]['lat'], api_response[0]['lon'])
 
 		try:
-			new_city = City.objects.create(name=new_city_name, latitude=new_city_coords[0], longitude=new_city_coords[1])
+			new_city = City.objects.create(
+										name=new_city_name,
+										latitude=new_city_coords[0],
+										longitude=new_city_coords[1])
 		except IntegrityError:
 			"""integrity error may happen if city with such a name already is in db """
 			new_city = City.objects.get(name=new_city_name)
@@ -42,7 +45,8 @@ def index(request):
 		city_list = current_user.appuser.cities.all()
 		units = current_user.appuser.units
 
-	weather_list = [pyreq.get(api_url.format(city.name,
+	weather_list = [pyreq.get(api_url.format(
+											city.name,
 											units,
 											config('current_API_KEY'))
 							).json() for city in city_list]
@@ -125,10 +129,15 @@ class CityDetailView(DetailView):
 		context['units'] = units
 
 		api_url = 'https://api.openweathermap.org/data/2.5/forecast?q={}&units={}&appid={}'
-		context['weather'] = pyreq.get(api_url.format(context['city'].name,
-													units,
-													config('forecast_API_KEY'))
+		context['weather'] = pyreq.get(
+									api_url.format(context['city'].name,
+									units,
+									config('forecast_API_KEY'))
 									).json()
+
+		context['coords_available'] = True
+		if context['city'].latitude is None or context['city'].longitude is None:
+			context['coords_available'] = False
 
 		return context
 
