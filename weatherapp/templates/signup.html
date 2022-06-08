@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div>
+        <p>
+            {% if alert %}
+
+                {{ alert }}
+
+            {% endif %}
+        </p>
+    </div>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <label>
+                Enter your username:<br>
+                <input name="username" type="text"><br>
+            </label>
+            <label>
+                Enter password:<br>
+                <input name="password1" type="password"><br>
+            </label>
+            <label>
+                Confirm password:<br>
+                <input name="password2" type="password"><br>
+            </label>
+            <label>
+                Choose your preferred units of measurement:<br>
+                <select name="units">
+                    <option value="standard">Scientific(Kelvin)</option>
+                    <option value="metric">Metric(Celsius degrees)</option>
+                    <option value="imperial">Imperial(Fahrenheit degrees)</option>
+                </select>
+            </label>
+            <button type="submit">Create Account</button>
+        </form>
+    </div>
+{% endblock %}

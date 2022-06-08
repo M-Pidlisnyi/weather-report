@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect
@@ -6,9 +6,7 @@ from django.shortcuts import render
 import requests as pyreq
 from django.views.generic import DetailView
 from decouple import config
-from .models import City
-
-
+from .models import City, AppUser
 # Create your views here.
 
 
@@ -40,9 +38,32 @@ def index(request):
 	return render(request, 'index.html', context=context)
 
 
-def user_profile(request, username):
+def signup(request):
 
-	return render(request, 'user_profile.html')
+	alert_text = None
+	context = {}
+
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		password1 = request.POST.get('password1')
+		password2 = request.POST.get('password2')
+		units = request.POST.get('units')
+		if password1 == password2:
+			try:
+				new_user = User.objects.create_user(username=username, password=password1)
+				AppUser.objects.create(user=new_user, units=units)
+				login(request, new_user)
+				return HttpResponseRedirect('/accounts/profile/')
+			except IntegrityError:
+				"""integrity error may happen if user with such username already exists"""
+				alert_text = "such username already exists\ntry new one or login"
+		else:
+			alert_text = "passwords don't match"
+
+	if alert_text is not None:
+		context['alert'] = alert_text
+
+	return render(request, 'signup.html', context=context)
 
 
 class CityDetailView(DetailView):
@@ -53,13 +74,6 @@ class CityDetailView(DetailView):
 		context = super(CityDetailView, self).get_context_data(**kwargs)
 		api_url = 'https://api.openweathermap.org/data/2.5/forecast?q={}&appid={}'
 		context['weather'] = pyreq.get(api_url.format(context['city'].name, config('forecast_API_KEY'))).json()
-
-		# check if coords for city are available
-		# not sure if i need to check at all
-		if not (context['city'].latitude or context['city'].longitude is None):
-			context['coords'] = (context['city'].latitude, context['city'].longitude)
-		else:
-			context['coords'] = None
 
 		return context
 

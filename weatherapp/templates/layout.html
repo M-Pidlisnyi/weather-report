@@ -15,11 +15,12 @@
                 {% if user.is_authenticated %}
                     <div>
                         Hello {{ user.get_username }}
-                        <a href="/user/{{ user.get_username }}">Your profile</a>
+                        <a href="{% url 'profile' %}">Your profile</a>
                     </div>
 
                 {% else %}
-                    You are not logged in
+                    You are not logged in<br>
+                    <a href="{% url 'login' %}">Log in</a>
                 {% endif %}
             </nav>
         </div>
