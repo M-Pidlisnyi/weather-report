@@ -8,21 +8,33 @@
                 <label>
                     <input type="text" name="city" placeholder="City Name">
                 </label>
-                <button type="submit">View City</button>
+                <button type="submit">View City</button><br>
+                <label>
+                    <input type="checkbox" name="add_to_list">
+                    Add city to your list?
+                </label>
             </div>
         </form>
     </div>
     <div>
         {% for city, weather in zipper %}
-        <div>
-            <p>
-                <span>{{ city.name }}</span>
-            </p>
-            <p>
-                <span>{{ weather.main.temp }} K</span>
-                {{ weather.weather.0.description }}
-            </p>
-        </div>
+        <a href="{{ city.get_absolute_url }}">
+            <div>
+                <p>
+                    <span>{{ city.name }}</span>
+                </p>
+                <p>
+                    <span>
+                        {{ weather.main.temp }}
+                        {% if units == 'standard'  %}K
+                        {% elif units == 'metric' %}°C
+                        {% elif units == 'imperial' %}°F
+                        {% endif %}
+                    </span>
+                    {{ weather.weather.0.description }}
+                </p>
+            </div>
+        </a>
         {% endfor %}
     </div>
 {% endblock %}

@@ -8,7 +8,9 @@
         this is your info:
         {{ user.get_username }}
         {{ user.appuser.units }}
-        {{ user.appuser.cities }}
+        {% for city in user.appuser.cities.all %}
+        {{ city.name }};
+        {% endfor %}
     </p>
     <p>
         <a href="{% url 'logout' %} ">Log out</a>

@@ -12,7 +12,13 @@
         {% for stamp in weather.list %}
             <div>
                 <p>
-                    {{ stamp.main.temp }} K
+                    <span>
+                    {{ stamp.main.temp }}
+                    {% if units == 'standard'  %}K
+                    {% elif units == 'metric' %}°C
+                    {% elif units == 'imperial' %}°F
+                    {% endif %}
+                </span>
                 </p>
                 <p>
                     {{ stamp.weathe.0.description }}

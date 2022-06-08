@@ -12,8 +12,9 @@ from .models import City, AppUser
 
 def index(request):
 
+	current_user = request.user
+
 	if request.method == 'POST':
-		# TODO: add checkbox for adding city to DB
 		new_city_name = request.POST.get('city', 'unknown city')
 
 		geocoding_url = 'https://api.openweathermap.org/geo/1.0/direct?q={}&appid={}'
@@ -25,14 +26,28 @@ def index(request):
 		except IntegrityError:
 			"""integrity error may happen if city with such a name already is in db """
 			new_city = City.objects.get(name=new_city_name)
+
+		if current_user.is_authenticated and request.POST.get('add_to_list', False):
+			current_user.appuser.cities.add(new_city)
+
 		return HttpResponseRedirect(new_city.get_absolute_url())
 
-	api_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'
-	city_list = City.objects.all()
-	weather_list = [pyreq.get(api_url.format(city.name, config('current_API_KEY'))).json() for city in city_list]
+	api_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&units={}&appid={}'
+
+	city_list = City.objects.all()  # later change to default list
+	units = 'standard'
+	if current_user.is_authenticated:
+		city_list = current_user.appuser.cities.all()
+		units = current_user.appuser.units
+
+	weather_list = [pyreq.get(api_url.format(city.name,
+											units,
+											config('current_API_KEY'))
+							).json() for city in city_list]
 
 	context = {
-		'zipper': zip(city_list, weather_list)
+		'zipper': zip(city_list, weather_list),
+		'units': units
 	}
 
 	return render(request, 'index.html', context=context)
@@ -47,7 +62,7 @@ def signup(request):
 		username = request.POST.get('username')
 		password1 = request.POST.get('password1')
 		password2 = request.POST.get('password2')
-		units = request.POST.get('units')
+		units = request.POST.get('units', 'standard')
 		if password1 == password2:
 			try:
 				new_user = User.objects.create_user(username=username, password=password1)
@@ -72,11 +87,20 @@ class CityDetailView(DetailView):
 
 	def get_context_data(self, **kwargs):
 		context = super(CityDetailView, self).get_context_data(**kwargs)
-		api_url = 'https://api.openweathermap.org/data/2.5/forecast?q={}&appid={}'
-		context['weather'] = pyreq.get(api_url.format(context['city'].name, config('forecast_API_KEY'))).json()
+
+		current_user = self.request.user
+		units = 'standard'
+		if current_user.is_authenticated:
+			units = current_user.appuser.units
+		context['units'] = units
+
+		api_url = 'https://api.openweathermap.org/data/2.5/forecast?q={}&units={}&appid={}'
+		context['weather'] = pyreq.get(api_url.format(context['city'].name,
+													units,
+													config('forecast_API_KEY'))
+									   ).json()
 
 		return context
 
 	def get_queryset(self):
 		return super(CityDetailView, self).get_queryset()
-
