@@ -1,0 +1,179 @@
+body {
+    background-color: #eeeeee;
+    font-size: 135%;
+    font-family: "Century Gothic", serif;
+}
+ /*layout.html*/
+.navbar-list{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+.navbar-list-item{
+    float: left;
+}
+.navbar-list-item a{
+    display: block;
+    color: #eee;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-top-style: inset;
+}
+.navbar-list-item a:hover{
+    background-color: #111;
+}
+.navbar-list-item-text{
+    float: left;
+    background-color: gray;
+}
+.navbar-list-item-text span{
+    display: block;
+    color: #eee;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-top-style: inset;
+}
+.nav-active {
+    background-color: #04aa6d;
+    border-top-style: inset;
+    border-left-style: inset;
+    border-right-style: inset;
+}
+
+
+/*index.html*/
+.content{
+    border-width: 2px;
+    border-style: solid;
+    border-color: #111111;
+    border-radius: 10px;
+    background-color: white;
+}
+.content div{
+    background-color: #dee4e2;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.form{
+    border-bottom: solid 1px;
+}
+.form-item{
+    padding: 9px;
+}
+.form-item-textfield{
+    padding-left: 5px;
+    width: 30%;
+    line-height: 250%;
+    border-radius: 5px;
+    border: solid 1px;
+}
+.form button{
+    border-radius: 5px;
+    border-color: #04aa6d;
+    color: #eee;
+    background-color: #04aa6d;
+}
+.form button:hover{
+    background-color: #04aa95;
+    opacity: 75%;
+}
+
+.cities-grid{
+    border-top: solid 1px;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 2px;
+}
+.cities-grid-item div{
+    border: solid 1px #111111;
+    border-radius: 5px;
+    text-align: center;
+    color: #eeeeee;
+    background-color: #04aa6d;
+}
+.cities-grid-item div:hover{
+    opacity: 75%;
+}
+.cities-grid-item a{
+    color: #111111;
+    text-decoration: none;
+}
+
+
+/*user_profile.html*/
+.form-grid-wrapper{
+    width: fit-content;
+    margin: 10px;
+}
+.form-grid{
+    display: grid;
+    margin: 5px;
+}
+.form-grid input, select, option{
+    width: 100%;
+}
+.standalone-button{
+    margin: 10px;
+    border-radius: 5px;
+    border-color: #04aa6d;
+    background-color: #04aa6d;
+}
+.standalone-button:hover{
+    background-color: #04aa95;
+}
+.standalone-button a {
+    color: #eeeeee;
+    text-decoration: none;
+}
+
+/*signup.html*/
+.alert{
+    background-color: white;
+    color: red;
+    width: fit-content;
+    padding: 5px 20px;
+    font-size: 120%;
+}
+.signup-units select{
+    width: auto;
+}
+.signup-button{
+    margin: 10px 0;
+}
+
+
+/*login.html*/
+.ptext{
+    font-size: 120%;
+    padding-left: 12px;
+}
+
+/*city_detail.html*/
+.city-info{
+    font-size: 120%;
+    padding-left: 30px;
+}
+.details-grid{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    column-gap: 1%;
+    row-gap: 6%;
+    padding: 0;
+    border-top: 2px solid #111111;
+    overflow: auto;
+}
+.details-grid-item{
+    border: 1px solid #111111;
+    margin: 0;
+    font-size: 90%;
+    font-family: ui-monospace;
+}
+.datetime{
+    float: right;
+}

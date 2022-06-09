@@ -2,46 +2,51 @@
 
 {% block content %}
 
-<div>
-    <p>
+<div class="content form">
+    <p class="ptext">
         You are in your profile settings
     </p>
     <form method="post">
     {% csrf_token %}
-        <label>
-            Username: <input type="text" name="username" value="{{ user.get_username }}" disabled>
-        </label>
-        <br>
-        <label>
-            Email: <input type="email" name="email" value="{{ user.email }}">
-        </label>
-         <br>
-        <label>
-            First Name: <input type="text" name="firstname" value="{{ user.first_name }}">
-        </label>
-         <br>
-        <label>
-            Last Name: <input type="text" name="lastname" value="{{ user.last_name }}">
-        </label>
-         <br>
-        <label>
-            Units of Measurement <select name="units">
-                    <option value="standard" {% if units == 'standard' %}selected{% endif %}>
-                        Scientific(Kelvin)
-                    </option>
-                    <option value="metric" {% if units == 'metric' %}selected{% endif %}>
-                        Metric(Celsius degrees)
-                    </option>
-                    <option value="imperial" {% if units == 'imperial' %}selected{% endif %}>
-                        Imperial(Fahrenheit degrees)
-                    </option>
-                </select>
-        </label>
+        <div class="form-grid-wrapper">
+            <div class="form-grid">
+            <label class="form-item">
+                Username: <input type="text" name="username" value="{{ user.get_username }}" disabled>
+            </label>
+
+            <label class="form-item">
+                Email: <input type="email" name="email" value="{{ user.email }}">
+            </label>
+
+            <label class="form-item">
+                First Name: <input type="text" name="firstname" value="{{ user.first_name }}">
+            </label>
+
+            <label class="form-item">
+                Last Name: <input type="text" name="lastname" value="{{ user.last_name }}">
+            </label>
+
+            <label class="form-item">
+                Units of Measurement <select name="units">
+                        <option value="standard" {% if units == 'standard' %}selected{% endif %}>
+                            Scientific(Kelvin)
+                        </option>
+                        <option value="metric" {% if units == 'metric' %}selected{% endif %}>
+                            Metric(Celsius degrees)
+                        </option>
+                        <option value="imperial" {% if units == 'imperial' %}selected{% endif %}>
+                            Imperial(Fahrenheit degrees)
+                        </option>
+                    </select>
+            </label>
+            </div>
         <button type="submit">Submit changes</button>
+        </div>
     </form>
-    <p>
+    <button class="standalone-button">
         <a href="{% url 'logout' %} ">Log out</a>
-    </p>
+    </button>
+
 </div>
 
 {% endblock %}

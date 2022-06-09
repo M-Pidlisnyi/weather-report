@@ -3,26 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>What's the weather like?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link   rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <section>
         <div>
             <nav>
-                <div>
-                    <a href="/admin">Admin page</a>
-                    <a href="/">Home page</a>
-                </div>
-                {% if user.is_authenticated %}
-                    <div>
-                        Hello {{ user.get_username }}
-                        <a href="{% url 'profile' %}">Your profile</a>
-                    </div>
-
-                {% else %}
-                    You are not logged in<br>
-                    <a href="{% url 'login' %}">Log in</a>
-                {% endif %}
+                <ul class="navbar-list">
+                    <li class="navbar-list-item">
+                        <a {% if request.path == '/' %} class="nav-active" {% endif %}href="/">Home page</a>
+                    </li>
+                    <li class="navbar-list-item">
+                        <a href="/admin">Admin page</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="navbar-list-item-text">
+                            <span> Hello {{ user.get_username }} </span>
+                    </li >
+                    <li class="navbar-list-item">
+                        <a {% if request.path == '/accounts/profile/' %} class="nav-active" {% endif %}
+                                href="{% url 'profile' %}">
+                            Your profile
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="navbar-list-item-text">
+                        <span > You are not logged in<br> </span>
+                    </li>
+                    <li class="navbar-list-item">
+                        <a {% if request.path == '/accounts/login/' %} class="nav-active" {% endif %}
+                                href="{% url 'login' %}">
+                            Log in
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
             </nav>
+            <div class="clearfix"><br></div>
         </div>
     </section>
     {% block content %}

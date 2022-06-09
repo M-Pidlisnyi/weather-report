@@ -4,36 +4,36 @@
     <div>
         <p>
             {% if alert %}
-
-                {{ alert }}
-
+                <p class="alert">
+                    !!! {{ alert }} !!!
+                </p>
             {% endif %}
         </p>
     </div>
-    <div>
+    <div class="form">
         <form method="post">
             {% csrf_token %}
-            <label>
+            <label class="form-item">
                 Enter your username:<br>
-                <input name="username" type="text"><br>
+                <input name="username" type="text" value="{{ request.POST.username }}"><br>
             </label>
-            <label>
+            <label class="form-item">
                 Enter password:<br>
                 <input name="password1" type="password"><br>
             </label>
-            <label>
+            <label class="form-item">
                 Confirm password:<br>
                 <input name="password2" type="password"><br>
             </label>
-            <label>
+            <label class="form-item signup-units">
                 Choose your preferred units of measurement:<br>
                 <select name="units">
                     <option value="standard">Scientific(Kelvin)</option>
                     <option value="metric">Metric(Celsius degrees)</option>
                     <option value="imperial">Imperial(Fahrenheit degrees)</option>
                 </select>
-            </label>
-            <button type="submit">Create Account</button>
+            </label><br>
+            <button type="submit" class="signup-button">Create Account</button>
         </form>
     </div>
 {% endblock %}

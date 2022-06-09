@@ -1,41 +1,46 @@
 {% extends 'layout.html' %}
-<div>
+
 {% block content %}
-    <div>
+<div class="content">
+    <div class="form">
         <form action="/" method="post">
             {% csrf_token %}
             <div>
-                <label>
-                    <input type="text" name="city" placeholder="City Name">
+                <label class="form-item">
+                    <input class="form-item-textfield" type="text" name="city" placeholder="City Name">
                 </label>
-                <button type="submit">View City</button><br>
-                <label>
+                <button type="submit" class="form-item">View City</button><br>
+                {% if user.is_authenticated %}
+                <label class="form-item checkbox">
                     <input type="checkbox" name="add_to_list">
-                    Add city to your list?
+                    <span class="checkbox-text">Add city to your list?</span>
                 </label>
+                {% endif %}
             </div>
         </form>
     </div>
-    <div>
+    <div class="cities-grid">
         {% for city, weather in zipper %}
-        <a href="{{ city.get_absolute_url }}">
-            <div>
-                <p>
-                    <span>{{ city.name }}</span>
-                </p>
-                <p>
-                    <span>
-                        {{ weather.main.temp }}
-                        {% if units == 'standard'  %}K
-                        {% elif units == 'metric' %}°C
-                        {% elif units == 'imperial' %}°F
-                        {% endif %}
-                    </span>
-                    {{ weather.weather.0.description }}
-                </p>
-            </div>
-        </a>
+        <div class="cities-grid-item">
+            <a href="{{ city.get_absolute_url }}">
+                <div>
+                    <p>
+                        <span>{{ city.name }}</span>
+                    </p>
+                    <p>
+                        <span>
+                            {{ weather.main.temp }}
+                            {% if units == 'standard'  %}K
+                            {% elif units == 'metric' %}°C
+                            {% elif units == 'imperial' %}°F
+                            {% endif %}
+                        </span>
+                        {{ weather.weather.0.description }}
+                    </p>
+                </div>
+            </a>
+        </div>
         {% endfor %}
     </div>
-{% endblock %}
 </div>
+{% endblock %}

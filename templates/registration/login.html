@@ -3,9 +3,9 @@
 {% block content %}
 
   {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
+    <p class="alert">Your username and password didn't match. Please try again.</p>
   {% endif %}
-    <div>
+    <div class="form">
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <table>
@@ -18,15 +18,13 @@
                 <td>{{ form.password }}</td>
               </tr>
             </table>
-            <input type="submit" value="login" />
+            <button type="submit"  class="signup-button">Log in</button>
         </form>
-    </div>
-    <div>
-        <p>
+        <p class="ptext">
             Don't have an account?
-            <a href="{% url 'signup' %}">Create one</a>
+            <button class="standalone-button">
+                <a href="{% url 'signup' %}">Create one</a>
+            </button>
         </p>
-
     </div>
-
 {% endblock %}

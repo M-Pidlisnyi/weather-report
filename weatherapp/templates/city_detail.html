@@ -1,16 +1,16 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div>
-    <p>
+<div class="content">
+    <p class="city-info">
         {{ city.name }}
         {% if coords_available %}
         ({{ city.latitude }},
         {{ city.longitude }})
         {% endif %}
     </p>
-    <div>
+    <div class="details-grid">
         {% for stamp in weather.list %}
-            <div>
+            <div class="details-grid-item">
                 <p>
                     <span>
                     {{ stamp.main.temp }}
@@ -21,9 +21,9 @@
                 </span>
                 </p>
                 <p>
-                    {{ stamp.weathe.0.description }}
+                    {{ stamp.weather.0.description }}
                 </p>
-                    -{{ stamp.dt_txt }}
+                    <span class="datetime">-{{ stamp.dt_txt }}</span>
             </div>
         {% endfor %}
     </div>
