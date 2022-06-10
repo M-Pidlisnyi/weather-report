@@ -24,6 +24,7 @@
         <div class="cities-grid-item">
             <a href="{{ city.get_absolute_url }}">
                 <div>
+                    <img src="https://openweathermap.org/img/w/{{weather.weather.0.icon}}.png" alt="img">
                     <p>
                         <span>{{ city.name }}</span>
                     </p>
@@ -35,8 +36,10 @@
                             {% elif units == 'imperial' %}°F
                             {% endif %}
                         </span>
-                        {{ weather.weather.0.description }}
-                    </p>
+                        <p>
+                            {{ weather.weather.0.description }}
+                        </p>
+
                 </div>
             </a>
         </div>

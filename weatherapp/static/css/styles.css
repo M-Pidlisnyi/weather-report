@@ -93,12 +93,17 @@ body {
 .cities-grid-item div{
     border: solid 1px #111111;
     border-radius: 5px;
-    text-align: center;
+    text-align: end;
     color: #eeeeee;
     background-color: #04aa6d;
 }
 .cities-grid-item div:hover{
     opacity: 75%;
+}
+.cities-grid-item img{
+    float: left;
+    height: 125px;
+    width: 125px;
 }
 .cities-grid-item a{
     color: #111111;
@@ -161,9 +166,7 @@ body {
 }
 .details-grid{
     display: grid;
-    grid-template-columns: auto auto auto auto auto;
-    column-gap: 1%;
-    row-gap: 6%;
+    grid-template-columns: auto ;
     padding: 0;
     border-top: 2px solid #111111;
     overflow: auto;
@@ -171,9 +174,29 @@ body {
 .details-grid-item{
     border: 1px solid #111111;
     margin: 0;
+    padding: 0;
     font-size: 90%;
     font-family: ui-monospace;
 }
+.weather-info{
+    margin-top: 0;
+    margin-bottom: 0.5%;
+    padding: 0 2%;
+}
+.description{
+    margin-top: 0.75%;
+    margin-bottom: 0.75%;
+}
+.weather-info span{
+    margin: 0;
+    margin-right: 4%;
+}
+.img{
+    float: left;
+    height: 95px;
+    width: 95px;
+}
 .datetime{
-    float: right;
+    float: left;
+    font-size: 120%;
 }

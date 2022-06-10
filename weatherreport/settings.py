@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'weatherapp'
+    'weatherapp',
+    'mathfilters'
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'weatherreport_DB',
-        'USER': 'misha', 'PASSWORD':'admin231100'
+        'USER': 'misha', 'PASSWORD': 'admin231100'
     }
 }
 

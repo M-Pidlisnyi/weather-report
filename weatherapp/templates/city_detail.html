@@ -1,4 +1,6 @@
 {% extends 'layout.html' %}
+{% load mathfilters %}
+
 {% block content %}
 <div class="content">
     <p class="city-info">
@@ -7,23 +9,35 @@
         ({{ city.latitude }},
         {{ city.longitude }})
         {% endif %}
+        {{ weather.city.country }}
     </p>
     <div class="details-grid">
         {% for stamp in weather.list %}
             <div class="details-grid-item">
-                <p>
-                    <span>
-                    {{ stamp.main.temp }}
-                    {% if units == 'standard'  %}K
-                    {% elif units == 'metric' %}°C
-                    {% elif units == 'imperial' %}°F
-                    {% endif %}
-                </span>
-                </p>
-                <p>
+                <img class="img" src="https://openweathermap.org/img/w/{{stamp.weather.0.icon}}.png" alt="img">
+                <span class="datetime">-{{ stamp.dt_txt }}</span><br>
+                <p class="description">
                     {{ stamp.weather.0.description }}
                 </p>
-                    <span class="datetime">-{{ stamp.dt_txt }}</span>
+                <p class="weather-info">
+                    <span class="temp">
+                        {{ stamp.main.temp }}
+                        {% if units == 'standard'  %}K
+                        {% elif units == 'metric' %}°C
+                        {% elif units == 'imperial' %}°F
+                        {% endif %}
+                    </span>
+                    <span class="pop">Precipitation: {{ stamp.pop|mul:100|floatformat:"0" }}%</span>
+                    <span class="sow">
+                        Speed of Wind:
+                        {{ stamp.wind.speed }}
+                        {% if units == 'standard'  %}m/s
+                        {% elif units == 'metric' %}m/s
+                        {% elif units == 'imperial' %}mph
+                        {% endif %}
+                    </span>
+                    <span class="pressure">Atmospheric pressure: {{ stamp.main.pressure|mul:0.75|floatformat:"0" }}mm</span>
+                </p>
             </div>
         {% endfor %}
     </div>
