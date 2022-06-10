@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
@@ -130,14 +132,16 @@ class CityDetailView(DetailView):
 
 		api_url = 'https://api.openweathermap.org/data/2.5/forecast?q={}&units={}&appid={}'
 		context['weather'] = pyreq.get(
-									api_url.format(context['city'].name,
-									units,
-									config('forecast_API_KEY'))
+										api_url.format(context['city'].name,
+										units,
+										config('forecast_API_KEY'))
 									).json()
 
-		context['coords_available'] = True
-		if context['city'].latitude is None or context['city'].longitude is None:
-			context['coords_available'] = False
+		context['coords_available'] = not(context['city'].latitude is None or context['city'].longitude is None)
+
+		ts_list = [ts['dt'] for ts in context['weather']['list']]
+		context['dates'] = [datetime.datetime.utcfromtimestamp(ts) for ts in ts_list]
+		context['zipper'] = zip(context['dates'], context['weather']['list'])
 
 		return context
 

@@ -12,10 +12,11 @@
         {{ weather.city.country }}
     </p>
     <div class="details-grid">
-        {% for stamp in weather.list %}
+        {% for datetime, stamp in zipper %}
+            <span class="datetime">{{ datetime|date:"d M, l, H.i" }}: </span>
             <div class="details-grid-item">
                 <img class="img" src="https://openweathermap.org/img/w/{{stamp.weather.0.icon}}.png" alt="img">
-                <span class="datetime">-{{ stamp.dt_txt }}</span><br>
+
                 <p class="description">
                     {{ stamp.weather.0.description }}
                 </p>

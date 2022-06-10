@@ -88,7 +88,7 @@ body {
     margin-top: 10px;
     display: grid;
     grid-template-columns: auto auto auto;
-    gap: 2px;
+    gap: 0;
 }
 .cities-grid-item div{
     border: solid 1px #111111;
@@ -166,17 +166,23 @@ body {
 }
 .details-grid{
     display: grid;
-    grid-template-columns: auto ;
+    grid-template-columns: 15% auto ;
+    column-gap: 0;
     padding: 0;
     border-top: 2px solid #111111;
     overflow: auto;
 }
 .details-grid-item{
-    border: 1px solid #111111;
     margin: 0;
     padding: 0;
     font-size: 90%;
     font-family: ui-monospace;
+}
+div.details-grid-item {
+    border: 1px solid #111111;
+    border-left-style: none;
+    border-bottom-style: none ;
+    border-radius: 0;
 }
 .weather-info{
     margin-top: 0;
@@ -186,10 +192,12 @@ body {
 .description{
     margin-top: 0.75%;
     margin-bottom: 0.75%;
+    font-size: 115%;
 }
 .weather-info span{
     margin: 0;
     margin-right: 4%;
+    font-size: 110%;
 }
 .img{
     float: left;
@@ -198,5 +206,6 @@ body {
 }
 .datetime{
     float: left;
-    font-size: 120%;
+    font-size: 110%;
+    margin-top: 1%;
 }
