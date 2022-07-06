@@ -78,9 +78,11 @@ WSGI_APPLICATION = 'weatherreport.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'weatherreport_DB',
-        'USER': 'misha', 'PASSWORD': 'admin231100'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+       # 'ENGINE': 'django.db.backends.mysql',
+       # 'NAME': 'weatherreport_DB',
+       # 'USER': 'misha', 'PASSWORD': 'admin231100'
     }
 }
 
